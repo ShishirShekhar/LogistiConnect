@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 const Register = ({ onFormSwitch }) => {
   const [username, setUsername] = useState("");
@@ -15,6 +16,25 @@ const Register = ({ onFormSwitch }) => {
       setErrorMessage("Passwords do not match");
       return;
     }
+
+    const requestBody = {
+      username,
+      email,
+      password,
+      userType,
+    };
+
+    axios
+      .post("http://localhost:3001/register", requestBody)
+      .then((response) => {
+        // Handle the response
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error(error);
+        setErrorMessage("An error occurred");
+      });
   };
 
   return (
@@ -91,12 +111,7 @@ const Register = ({ onFormSwitch }) => {
           <option value="transporter">Transporter</option>
         </select>
 
-        {
-            errorMessage && 
-            <p className="text-white mb-2">
-                {errorMessage}!!
-            </p>
-        }
+        {errorMessage && <p className="text-white mb-2">{errorMessage}!!</p>}
 
         <button
           type="submit"

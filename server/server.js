@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 // Import required models
 const User = require("./model/user");
 
@@ -13,6 +14,7 @@ const port = process.env.PORT || 3001;
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 // Mongodb connection
 mongoose
@@ -37,7 +39,7 @@ app.post("/register", (req, res) => {
   const { username, email, password, userType } = req.body;
 
   // Check if the user already exists
-  User.findOne({ username })
+  User.findOne({ email })
     .then((existingUser) => {
       if (existingUser) {
         return res.status(400).json({ message: "Username already exists" });
@@ -57,15 +59,15 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  // Find the user by username and password
-  User.findOne({ username, password })
+  // Find the user by email and password
+  User.findOne({ email, password })
     .then((user) => {
       if (!user) {
         return res
           .status(401)
-          .json({ message: "Invalid username or password" });
+          .json({ message: "Invalid email or password" });
       }
 
       // User found, return success response
