@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 })
 
 app.post("/register", (req, res) => {
-  const { username, password, userType } = req.body;
+  const { username, email, password, userType } = req.body;
 
   // Check if the user already exists
   User.findOne({ username })
@@ -44,7 +44,7 @@ app.post("/register", (req, res) => {
       }
 
       // Create a new user
-      const newUser = new User({ username, password, userType });
+      const newUser = new User({ username, email, password, userType });
       return newUser.save();
     })
     .then(() => {
