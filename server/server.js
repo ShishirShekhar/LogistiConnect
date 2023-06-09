@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 // Import required routes
 const authRoutes = require("./routes/authRoute");
-const orders = require("./routes/orderRoute")
+const orderRoutes = require("./routes/orderRoute")
 // Import database
 const database = require("./services/database");
 
@@ -28,6 +28,8 @@ app.get("/", (req, res) => {
 
 // Use the authRoutes middleware
 app.use(authRoutes);
+app.use(orderRoutes);
+
 app.listen(port, () => {
   // Use the port variable
   console.log(`Server is running on port ${port}`);
