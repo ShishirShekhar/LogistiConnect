@@ -10,4 +10,13 @@ router.post("/register", UserController.register);
 // Login route
 router.post("/login", UserController.login);
 
+// Get users route
+router.get("/users", UserController.users);
+
+// Get manufacturers route
+router.get("/manufacturers", UserController.manufacturers);
+
+// Get transporters route
+router.get("/transporters", UserController.transporters);
+
 module.exports = router;

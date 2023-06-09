@@ -9,7 +9,8 @@ const Manufacturer = () => {
   const [from, setFrom] = useState("");
   const [quantity, setQuantity] = useState("1");
   const [address, setAddress] = useState("");
-  const [transporter, setTransporter] = useState("t1");
+  const [transporter, setTransporter] = useState("");
+  const [transporters, setTransporters] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
   const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -37,6 +38,16 @@ const Manufacturer = () => {
     setAddress(response.data.features[0].place_name);
   };
 
+  const getTransporters = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/transporters");
+      setTransporters(response.data.transporters);
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -54,7 +65,11 @@ const Manufacturer = () => {
               name="orderId"
               placeholder="Order Id"
               value={orderId}
-              onClick={generateOrderId}
+              onClick={() => {
+                generateOrderId();
+                getTransporters();
+              }}
+              readOnly
               required
             />
 
@@ -100,6 +115,7 @@ const Manufacturer = () => {
               placeholder="Address"
               value={address}
               onClick={setLocation}
+              readOnly
               required
             />
 
@@ -110,8 +126,11 @@ const Manufacturer = () => {
               value={transporter}
               onChange={(e) => setTransporter(e.target.value)}
             >
-              <option value="t1">t1</option>
-              <option value="t2">t2</option>
+              {transporters.map((trans) => (
+                <option key={trans._id} value={trans.email}>
+                  {trans.email}
+                </option>
+              ))}
             </select>
 
             {errorMessage && (
