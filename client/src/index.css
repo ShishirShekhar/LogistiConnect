@@ -5,3 +5,28 @@
 .bg {
   background: linear-gradient(79deg, #7439db, #c66fbc 48%, #f7944d);
 }
+
+.form_container {
+  @apply sm:shadow-md sm:border-2 border-white rounded-xl p-8
+}
+
+.form_title {
+  @apply text-white text-2xl font-bold mb-4
+}
+
+form {
+  @apply flex flex-col
+}
+
+.form_container label {
+  @apply text-left pb-1
+}
+
+.form_container input, select {
+  @apply px-4 py-2 mb-4 border rounded text-[#7349db]
+}
+
+.form_container .submit {
+  @apply bg-white text-[#7349db] hover:bg-gray-200 py-2 px-4 rounded
+}
+

@@ -21,7 +21,7 @@ const Register = ({ onFormSwitch }) => {
     }
 
     // Set the Content-Type header
-    axios.defaults.headers.post["Content-Type"] = "application/json"; 
+    axios.defaults.headers.post["Content-Type"] = "application/json";
 
     const requestBody = {
       username,
@@ -54,12 +54,10 @@ const Register = ({ onFormSwitch }) => {
   };
 
   return (
-    <div className="sm:shadow-md sm:border-2 border-white rounded-xl p-8">
-      <h2 className="text-3xl font-bold mb-6">Register</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col">
-        <label htmlFor="username" className="text-left pb-1">
-          Username:
-        </label>
+    <div className="form_container">
+      <h2 className="form_title">Register</h2>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="username">Username:</label>
         <input
           type="text"
           id="username"
@@ -67,13 +65,10 @@ const Register = ({ onFormSwitch }) => {
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="px-4 py-2 mb-4 border rounded text-[#7349db]"
           required
         />
 
-        <label htmlFor="email" className="text-left pb-1">
-          Email:
-        </label>
+        <label htmlFor="email">Email:</label>
         <input
           type="email"
           id="email"
@@ -81,13 +76,10 @@ const Register = ({ onFormSwitch }) => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="px-4 py-2 mb-4 border rounded text-[#7349db]"
           required
         />
 
-        <label htmlFor="password" className="text-left pb-1">
-          Password:
-        </label>
+        <label htmlFor="password">Password:</label>
         <input
           type="password"
           id="password"
@@ -95,13 +87,10 @@ const Register = ({ onFormSwitch }) => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="px-4 py-2 mb-4 border rounded text-[#7349db]"
           required
         />
 
-        <label htmlFor="confirmPassword" className="text-left pb-1">
-          Confirm Password:
-        </label>
+        <label htmlFor="confirmPassword">Confirm Password:</label>
         <input
           type="password"
           id="confirmPassword"
@@ -109,19 +98,15 @@ const Register = ({ onFormSwitch }) => {
           placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="px-4 py-2 mb-4 border rounded text-[#7349db]"
           required
         />
 
-        <label htmlFor="userType" className="text-left pb-1">
-          User Type:
-        </label>
+        <label htmlFor="userType">User Type:</label>
         <select
           id="userType"
           name="userType"
           value={userType}
           onChange={(e) => setUserType(e.target.value)}
-          className="px-4 py-2 mb-4 border rounded text-[#7349db]"
         >
           <option value="manufacturer">Manufacturer</option>
           <option value="transporter">Transporter</option>
@@ -129,10 +114,7 @@ const Register = ({ onFormSwitch }) => {
 
         {errorMessage && <p className="text-white mb-2">{errorMessage}!!</p>}
 
-        <button
-          type="submit"
-          className="bg-white text-[#7349db] hover:bg-gray-200 py-2 px-4 rounded"
-        >
+        <button type="submit" className="submit">
           Sign Up
         </button>
       </form>

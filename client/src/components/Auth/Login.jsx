@@ -45,12 +45,10 @@ const Login = ({ onFormSwitch }) => {
   };
 
   return (
-    <div className="sm:shadow-md sm:border-2 border-white rounded-xl p-8">
-      <h2 className="text-3xl font-bold mb-6">Login</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col">
-        <label htmlFor="email" className="text-left pb-1">
-          Email:
-        </label>
+    <div className="form_container">
+      <h2 className="form_title">Login</h2>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email:</label>
         <input
           type="text"
           id="email"
@@ -58,13 +56,10 @@ const Login = ({ onFormSwitch }) => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="px-4 py-2 mb-4 border rounded text-[#7349db]"
           required
         />
 
-        <label htmlFor="password" className="text-left pb-1">
-          Password:
-        </label>
+        <label htmlFor="password">Password:</label>
         <input
           type="password"
           id="password"
@@ -72,16 +67,12 @@ const Login = ({ onFormSwitch }) => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="px-4 py-2 mb-4 border rounded text-[#7349db]"
           required
         />
 
         {errorMessage && <p className="text-white mb-2">{errorMessage}!!</p>}
 
-        <button
-          type="submit"
-          className="bg-white text-[#7349db] hover:bg-gray-200 py-2 px-4 rounded"
-        >
+        <button type="submit" className="submit">
           Login
         </button>
       </form>
