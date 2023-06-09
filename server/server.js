@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 // Import required routes
 const authRoutes = require("./routes/authRoute");
+const orders = require("./routes/orderRoute")
 // Import database
 const database = require("./services/database");
 
