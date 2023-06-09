@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Register = ({ onFormSwitch }) => {
@@ -9,6 +10,8 @@ const Register = ({ onFormSwitch }) => {
   const [userType, setUserType] = useState("manufacturer");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -16,6 +19,9 @@ const Register = ({ onFormSwitch }) => {
       setErrorMessage("Passwords do not match");
       return;
     }
+
+    // Set the Content-Type header
+    axios.defaults.headers.post["Content-Type"] = "application/json"; 
 
     const requestBody = {
       username,
@@ -29,11 +35,21 @@ const Register = ({ onFormSwitch }) => {
       .then((response) => {
         // Handle the response
         console.log(response.data);
+
+        if (userType === "manufacturer") {
+          navigate("/manufacturer");
+        } else {
+          navigate("/transporter");
+        }
       })
       .catch((error) => {
         // Handle errors
         console.error(error);
-        setErrorMessage("An error occurred");
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        } else {
+          setErrorMessage("An error occurred");
+        }
       });
   };
 

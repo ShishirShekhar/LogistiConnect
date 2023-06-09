@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = ({ onFormSwitch }) => {
@@ -6,24 +7,40 @@ const Login = ({ onFormSwitch }) => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const requestBody = {
       email,
-      password
+      password,
     };
 
     axios
       .post("http://localhost:3001/login", requestBody)
       .then((response) => {
         // Handle the response
-        console.log(response.data);
+        const { userType } = response.data.user;
+        console.log(userType);
+
+        if (userType === "manufacturer") {
+          navigate("/manufacturer");
+        } else if (userType === "transporter") {
+          navigate("/transporter");
+        } else {
+          // Handle unrecognized user type
+          setErrorMessage("Invalid user type");
+        }
       })
       .catch((error) => {
         // Handle errors
         console.error(error);
-        setErrorMessage("An error occurred");
+        if (error.response && error.response.status === 401) {
+          setErrorMessage("Invalid email or password");
+        } else {
+          setErrorMessage("An error occurred");
+        }
       });
   };
 

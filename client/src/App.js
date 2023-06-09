@@ -1,13 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Auth from "./pages/Auth";
-import Home from "./pages/Auth";
+import Manufacturer from "./pages/Manufacturer";
+import Transporter from "./pages/Transporter";
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Auth />} />
+        <Route path="/manufacturer" element={<Manufacturer />} />
+        <Route path="/transporter" element={<Transporter />} />
       </Routes>
     </Router>
   );
