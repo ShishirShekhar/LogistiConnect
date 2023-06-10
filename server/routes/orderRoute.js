@@ -8,6 +8,6 @@ const OrderController = require("../controller/orderController");
 router.get("/orders", OrderController.orders);
 // Post order route
 router.post("/order", OrderController.createOrder);
-// router.put("/order", OrderController.updateOrder);
+router.patch("/order", OrderController.updateOrder);
 
 module.exports = router;

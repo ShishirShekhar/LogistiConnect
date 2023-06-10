@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 // Define Order Schema
 const orderSchema = new mongoose.Schema({
-  orderId: { type: String, require: true },
+  orderId: { type: String, require: true, unique: true },
   to: { type: String, required: true },
   from: { type: String, required: true },
   quantity: { type: String, enum: [1, 2, 3], required: true },
@@ -14,7 +14,7 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
   price: { type: String, require: true },
-  message: { type: String, require: true }
+  message: { type: String, require: true },
 });
 
 // Define Model

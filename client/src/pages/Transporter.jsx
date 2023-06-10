@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Nav from "../components/Nav";
 
@@ -15,10 +17,11 @@ const Transporter = () => {
     try {
       const response = await axios.get("http://localhost:3001/orders");
       // filter data by selecting only order for the transporter
-      const filtered = response.data.filter((user) => user.transporter === login._id)
+      const filtered = response.data.filter(
+        (user) => user.transporter === login._id
+      );
       // set orders
       setOrders(filtered);
-
     } catch (error) {
       console.log(error);
       setErrorMessage(error);
@@ -27,6 +30,36 @@ const Transporter = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const selectedOrderId = orderId || orders[0]._id;
+
+    const requestedOrder = {
+      orderId: selectedOrderId,
+      price: price
+    };
+
+    axios
+      .patch("http://localhost:3001/order", requestedOrder)
+      .then((response) => {
+        setErrorMessage("");
+        console.log(response.data);
+        toast.success("Message submitted successfully");
+
+        // clear form
+        setOrderId("");
+        setOrders("");
+        setPrice("");
+        setErrorMessage("");
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        } else {
+          setErrorMessage("An error occurred");
+        }
+        toast.error(errorMessage);
+        console.log(error);
+      });
   };
 
   return (
@@ -34,6 +67,7 @@ const Transporter = () => {
       <Nav />
 
       <div className="h-full flex flex-col justify-center w-full sm:max-w-md">
+        <ToastContainer />
         <div className="form_container">
           <h2 className="form_title">Transporter</h2>
           <form onSubmit={handleSubmit}>
@@ -45,9 +79,9 @@ const Transporter = () => {
               onChange={(e) => setOrderId(e.target.value)}
               onClick={getOrders}
             >
-              {orders.map((order) => (
-                <option key={order._id} value={order.email}>
-                  {order.orderId}
+              {orders.map(({ _id, orderId }) => (
+                <option key={_id} value={_id}>
+                  {orderId}
                 </option>
               ))}
             </select>

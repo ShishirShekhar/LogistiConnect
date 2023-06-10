@@ -3,14 +3,14 @@ const Order = require("../model/order");
 
 // Get all the orders
 exports.orders = async (req, res) => {
-    try {
-        const orders = await Order.find();
-        res.status(200).json(orders);
-    } catch(error) {
-        console.log(error);
-        res.status(500).json({ message: "An error occurred" });
-    }
-}
+  try {
+    const orders = await Order.find();
+    res.status(200).json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "An error occurred" });
+  }
+};
 
 // Create new orders
 exports.createOrder = async (req, res) => {
@@ -23,7 +23,7 @@ exports.createOrder = async (req, res) => {
       address,
       transporter,
       price,
-      message
+      message,
     } = new Order(req.body);
 
     // Check if the order already exists
@@ -41,7 +41,7 @@ exports.createOrder = async (req, res) => {
       address,
       transporter,
       price,
-      message
+      message,
     });
     await newOrder.save();
 
@@ -52,4 +52,27 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.updateOrder = async (req, res) => {};
+exports.updateOrder = async (req, res) => {
+  try {
+    const { orderId, price } = req.body;
+
+    // find order by order id
+    const order = await Order.findOne({ orderId });
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Update the order fields with the new data
+    order.price = price;
+    order.message = `Order accepted at price ${price} by ${order.transporter}`;
+
+    // Save the updated order
+    await order.save();
+
+    res.status(200).json({ message: "Order updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error updating order" });
+  }
+};
