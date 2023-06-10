@@ -30,7 +30,7 @@ const Transporter = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const selectedOrderId = orderId || orders[0]._id;
+    const selectedOrderId = orderId || orders[0].orderId;
 
     const requestedOrder = {
       orderId: selectedOrderId,
@@ -46,7 +46,6 @@ const Transporter = () => {
 
         // clear form
         setOrderId("");
-        setOrders("");
         setPrice("");
         setErrorMessage("");
       })
@@ -79,8 +78,8 @@ const Transporter = () => {
               onChange={(e) => setOrderId(e.target.value)}
               onClick={getOrders}
             >
-              {orders.map(({ _id, orderId }) => (
-                <option key={_id} value={_id}>
+              {orders.map(({ orderId }) => (
+                <option key={orderId} value={orderId}>
                   {orderId}
                 </option>
               ))}
