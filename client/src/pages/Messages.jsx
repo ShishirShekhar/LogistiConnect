@@ -26,7 +26,7 @@ const Messages = () => {
     <div className="flex items-center justify-center h-screen bg text-white text-center">
       <div className="w-full sm:max-w-md">
         <h1 className="form_title">Messages</h1>
-        <div className="text-left">
+        <div className="text-left flex flex-col gap-2">
           {orders.map((order) => (
             <div className="form_container" key={order.orderId}>
               <p>OrderId: {order.orderId}</p>
