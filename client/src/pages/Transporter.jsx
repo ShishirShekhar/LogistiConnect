@@ -1,17 +1,24 @@
 import { useState } from "react";
 import axios from "axios";
 
+import Nav from "../components/Nav";
+
 const Transporter = () => {
   const [orderId, setOrderId] = useState("");
   const [orders, setOrders] = useState([]);
   const [price, setPrice] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const login = JSON.parse(localStorage.getItem("login"));
+
   const getOrders = async () => {
     try {
       const response = await axios.get("http://localhost:3001/orders");
-      // setOrders(response.data);
-      console.log(response.data);
+      // filter data by selecting only order for the transporter
+      const filtered = response.data.filter((user) => user.transporter === login._id)
+      // set orders
+      setOrders(filtered);
+
     } catch (error) {
       console.log(error);
       setErrorMessage(error);
@@ -23,8 +30,10 @@ const Transporter = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg text-white text-center">
-      <div className="w-full sm:max-w-md">
+    <div className="flex flex-col items-center h-screen bg text-white text-center">
+      <Nav />
+
+      <div className="h-full flex flex-col justify-center w-full sm:max-w-md">
         <div className="form_container">
           <h2 className="form_title">Transporter</h2>
           <form onSubmit={handleSubmit}>

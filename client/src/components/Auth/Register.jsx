@@ -34,7 +34,7 @@ const Register = ({ onFormSwitch }) => {
       .post("http://localhost:3001/register", requestBody)
       .then((response) => {
         // Handle the response
-        console.log(response.data);
+        localStorage.setItem("login", JSON.stringify(response.data))
 
         if (userType === "manufacturer") {
           navigate("/manufacturer");

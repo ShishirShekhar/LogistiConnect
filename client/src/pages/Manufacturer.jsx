@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+import Nav from "../components/Nav";
 import getCurrentLocation from "../utils/currentLocation";
 
 const Manufacturer = () => {
@@ -51,8 +54,8 @@ const Manufacturer = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const price = 0;
-    const message = "";
+    // Use the selected transporter or the first transporter if none is selected
+    const selectedTransporter = transporter || transporters[0]._id;
 
     const order = {
       orderId,
@@ -60,31 +63,45 @@ const Manufacturer = () => {
       from,
       quantity,
       address,
-      transporter: transporter,
-      price,
-      message,
+      transporter: selectedTransporter,
+      price: 0,
+      message: "",
     };
 
     axios
       .post("http://localhost:3001/order", order)
       .then((response) => {
-        // Handle the response
+        setErrorMessage("");
         console.log(response.data);
+        toast.success("Order submitted successfully");
+
+        // Reset the form values
+        setOrderId("");
+        setTo("");
+        setFrom("");
+        setQuantity("1");
+        setAddress("");
+        setTransporter("");
+        setErrorMessage("");
       })
       .catch((error) => {
-        // Handle errors
         console.error(error);
         if (error.response) {
           setErrorMessage(error.response.data.message);
         } else {
           setErrorMessage("An error occurred");
         }
+        toast.error(errorMessage);
+        console.log(error);
       });
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg text-white text-center">
-      <div className="w-full sm:max-w-md">
+    <div className="flex flex-col items-center h-screen bg text-white text-center">
+      <Nav />
+
+      <div className="h-full flex flex-col justify-center w-full sm:max-w-md">
+        <ToastContainer />
         <div className="form_container">
           <h2 className="form_title">Manufacturer</h2>
           <form onSubmit={handleSubmit}>
@@ -95,7 +112,7 @@ const Manufacturer = () => {
               name="orderId"
               placeholder="Order Id"
               value={orderId}
-              onClick={() => {
+              onClick={async () => {
                 generateOrderId();
                 getTransporters();
               }}
