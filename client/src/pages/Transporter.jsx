@@ -8,7 +8,7 @@ import Nav from "../components/Nav";
 const Transporter = () => {
   const [orderId, setOrderId] = useState("");
   const [orders, setOrders] = useState([]);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const login = JSON.parse(localStorage.getItem("login"));

@@ -15,7 +15,7 @@ const Manufacturer = () => {
   const [transporter, setTransporter] = useState("");
   const [transporters, setTransporters] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const login = JSON.parse(localStorage.getItem("login"));
   const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
   const generateOrderId = () => {
@@ -63,6 +63,7 @@ const Manufacturer = () => {
       from,
       quantity,
       address,
+      manufacturer: login._id,
       transporter: selectedTransporter,
       price: 0,
       message: "",
