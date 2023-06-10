@@ -53,7 +53,7 @@ exports.users = async (req, res) => {
   try {
     const users = await User.find();
     if (users) {
-      res.status(200).json({ users });
+      res.status(200).json(users);
     } else {
       res.status(404).json({ message: "No user found"})
     }
@@ -69,7 +69,7 @@ exports.manufacturers = async (req, res) => {
   try {
     const manufacturers = await User.find({ userType: 'manufacturer' });
     if (manufacturers) {
-      res.status(200).json({ manufacturers });
+      res.status(200).json(manufacturers);
     } else {
       res.status(404).json({ message: "No manufacturers found"})
     }
@@ -85,7 +85,7 @@ exports.transporters = async (req, res) => {
   try {
     const transporters = await User.find({ userType: 'transporter' });
     if (transporters) {
-      res.status(200).json({ transporters });
+      res.status(200).json(transporters);
     } else {
       res.status(404).json({ message: "No transporters found"})
     }

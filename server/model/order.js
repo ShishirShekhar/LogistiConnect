@@ -8,7 +8,11 @@ const orderSchema = new mongoose.Schema({
   from: { type: String, required: true },
   quantity: { type: String, enum: [1, 2, 3], required: true },
   address: { type: String, required: true },
-  transporter: { type: String, required: true },
+  transporter: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   price: { type: String, require: true },
   message: { type: String, require: true }
 });

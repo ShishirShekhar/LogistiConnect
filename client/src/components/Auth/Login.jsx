@@ -21,12 +21,14 @@ const Login = ({ onFormSwitch }) => {
       .post("http://localhost:3001/login", requestBody)
       .then((response) => {
         // Handle the response
-        const { userType } = response.data.user;
-        console.log(userType);
+        const user = response.data.user;
+        // set user data in localStorage
+        localStorage.setItem("login", JSON.stringify(user));
 
-        if (userType === "manufacturer") {
+        // Navigate
+        if (user.userType === "manufacturer") {
           navigate("/manufacturer");
-        } else if (userType === "transporter") {
+        } else if (user.userType === "transporter") {
           navigate("/transporter");
         } else {
           // Handle unrecognized user type

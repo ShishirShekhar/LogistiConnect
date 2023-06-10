@@ -1,6 +1,18 @@
 // Import required models
 const Order = require("../model/order");
 
+// Get all the orders
+exports.orders = async (req, res) => {
+    try {
+        const orders = await Order.find();
+        res.status(200).json(orders);
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({ message: "An error occurred" });
+    }
+}
+
+// Create new orders
 exports.createOrder = async (req, res) => {
   try {
     const {

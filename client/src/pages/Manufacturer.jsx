@@ -41,7 +41,7 @@ const Manufacturer = () => {
   const getTransporters = async () => {
     try {
       const response = await axios.get("http://localhost:3001/transporters");
-      setTransporters(response.data.transporters);
+      setTransporters(response.data);
     } catch (error) {
       console.log(error);
       setErrorMessage(error);
@@ -50,6 +50,36 @@ const Manufacturer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const price = 0;
+    const message = "";
+
+    const order = {
+      orderId,
+      to,
+      from,
+      quantity,
+      address,
+      transporter: transporter,
+      price,
+      message,
+    };
+
+    axios
+      .post("http://localhost:3001/order", order)
+      .then((response) => {
+        // Handle the response
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error(error);
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        } else {
+          setErrorMessage("An error occurred");
+        }
+      });
   };
 
   return (
@@ -127,8 +157,8 @@ const Manufacturer = () => {
               onChange={(e) => setTransporter(e.target.value)}
             >
               {transporters.map((trans) => (
-                <option key={trans._id} value={trans.email}>
-                  {trans.email}
+                <option key={trans._id} value={trans._id}>
+                  {trans._id}
                 </option>
               ))}
             </select>

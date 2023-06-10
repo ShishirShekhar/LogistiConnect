@@ -1,9 +1,22 @@
 import { useState } from "react";
+import axios from "axios";
 
 const Transporter = () => {
-  const [orderId, setOrderId] = useState("1");
-  const [price, setPrice] = useState("1");
+  const [orderId, setOrderId] = useState("");
+  const [orders, setOrders] = useState([]);
+  const [price, setPrice] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const getOrders = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/orders");
+      // setOrders(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,10 +34,13 @@ const Transporter = () => {
               name="orderId"
               value={orderId}
               onChange={(e) => setOrderId(e.target.value)}
+              onClick={getOrders}
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+              {orders.map((order) => (
+                <option key={order._id} value={order.email}>
+                  {order.orderId}
+                </option>
+              ))}
             </select>
 
             <label htmlFor="price">Price:</label>
