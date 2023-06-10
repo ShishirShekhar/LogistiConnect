@@ -38,7 +38,7 @@ const Transporter = () => {
     };
 
     axios
-      .patch("http://localhost:3001/order", requestedOrder)
+      .patch("https://logisti-connect-server.vercel.app/order", requestedOrder)
       .then((response) => {
         setErrorMessage("");
         console.log(response.data);
