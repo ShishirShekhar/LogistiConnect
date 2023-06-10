@@ -31,7 +31,7 @@ const Register = ({ onFormSwitch }) => {
     };
 
     axios
-      .post("http://localhost:3001/register", requestBody)
+      .post("https://logisti-connect-server.vercel.app/register", requestBody)
       .then((response) => {
         // Handle the response
         localStorage.setItem("login", JSON.stringify(response.data))

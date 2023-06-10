@@ -43,7 +43,7 @@ const Manufacturer = () => {
 
   const getTransporters = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/transporters");
+      const response = await axios.get("https://logisti-connect-server.vercel.app/transporters");
       setTransporters(response.data);
     } catch (error) {
       console.log(error);
@@ -70,7 +70,7 @@ const Manufacturer = () => {
     };
 
     axios
-      .post("http://localhost:3001/order", order)
+      .post("https://logisti-connect-server.vercel.app/order", order)
       .then((response) => {
         setErrorMessage("");
         console.log(response.data);

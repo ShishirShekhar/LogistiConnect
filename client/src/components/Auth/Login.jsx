@@ -18,7 +18,7 @@ const Login = ({ onFormSwitch }) => {
     };
 
     axios
-      .post("http://localhost:3001/login", requestBody)
+      .post("https://logisti-connect-server.vercel.app/login", requestBody)
       .then((response) => {
         // Handle the response
         const user = response.data.user;

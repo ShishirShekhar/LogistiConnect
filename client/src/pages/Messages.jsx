@@ -8,7 +8,7 @@ const Messages = () => {
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/orders");
+        const response = await axios.get("https://logisti-connect-server.vercel.app/orders");
         // filter data by selecting only order for the transporter
         const filtered = response.data.filter(
           (user) => user.manufacturer === login._id
