@@ -31,7 +31,7 @@ const Messages = () => {
             <div className="form_container" key={order.orderId}>
               <p>OrderId: {order.orderId}</p>
               <p>Transporter: {order.transporter}</p>
-              {order.price !== "0" && <p>{order.price}</p>}
+              {order.price !== "0" && <p>Price: {order.price}</p>}
               {order.message !== "" && <p>Message: {order.message}</p>}
             </div>
           ))}
